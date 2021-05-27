@@ -22,19 +22,15 @@ def webhook():
 @app.route('/predict', methods=['POST'])
 def predict():
     if model:
-        try:
             json_ = request.json
             print(json_)
             query = pd.get_dummies(pd.DataFrame(json_))
             query = query.reindex(columns=model_columns, fill_value=0)
 
             prediction = list(model.predict(query))
-
-            return jsonify({'prediction': str(prediction)})
-
-        except:
-
-            return jsonify({'trace': traceback.format_exc()})
+            print(prediction)
+            nanda='nanda'
+            return nanda
     else:
         print ('Train the model first')
         return ('No model here to use')
@@ -42,7 +38,7 @@ def predict():
 if __name__ == "__main__":
     app.secret_key = 'SecretKey'
 
-    with open("model.pkl", "rb") as f:
+    with open("new_model.pkl", "rb") as f:
         model = pickle.load(f)
         print("model loaded into webhook")
 
