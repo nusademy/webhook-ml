@@ -1,6 +1,6 @@
-import flask, requests, jsonify
+import flask, requests
 import os
-from flask import send_from_directory, request
+from flask import *
 import json
 import traceback
 import pandas as pd
@@ -47,4 +47,4 @@ if __name__ == "__main__":
         print("model column loaded!")
 
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0', port=80)

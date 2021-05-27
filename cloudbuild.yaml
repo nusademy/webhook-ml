@@ -1,0 +1,13 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/nusademy-b21-cap0289/webhook-ml', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/nusademy-b21-cap0289/webhook-ml']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'webhook-ml', '--image', 'gcr.io/nusademy-b21-cap0289/webhook-ml', '--region', 'us-central1', '--platform', 'managed','--port','80']
+images:
+- gcr.io/nusademy-b21-cap0289/webhook-ml
