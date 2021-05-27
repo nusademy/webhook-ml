@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV PORT 80
 ENV HOST 0.0.0.0
