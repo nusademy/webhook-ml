@@ -51,4 +51,4 @@ if __name__ == "__main__":
         print("model column loaded!")
 
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0', port=80)
