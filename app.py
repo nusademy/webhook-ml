@@ -10,6 +10,8 @@ import pickle
 app = flask.Flask(__name__)
 
 @app.route('/')
+def index():
+    return '<h3 style="text-align: center;">Welcome to Nusademy Webhook API!<h3>'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
