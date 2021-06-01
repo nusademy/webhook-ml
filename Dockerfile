@@ -8,6 +8,7 @@ EXPOSE 80
 RUN apt-get update -y && \
     apt-get install -y python3-pip
 COPY ./requirements.txt /app/requirements.txt
+ADD https://storage.googleapis.com/database_import_nusademy/vectorizer.pkl /app
 
 WORKDIR /app
 RUN pip3 install --upgrade pip
