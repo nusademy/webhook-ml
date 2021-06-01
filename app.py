@@ -1,17 +1,49 @@
-import flask, requests
-import os
-from flask import *
-import json
-import traceback
-import pandas as pd
+#import libraries
+import flask
 import numpy as np
+from flask import *
 import pickle
+import re
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from google_trans_new import google_translator  
+from urllib.request import urlopen
+import cloudpickle as cp
+import os.path
+from os import path
 
+
+
+#import model
+with open("model_EI.pkl", "rb") as f:
+    model_EI = pickle.load(f)
+with open("model_FT.pkl", "rb") as f:
+    model_FT = pickle.load(f)
+with open("model_JP.pkl", "rb") as f:
+    model_JP = pickle.load(f)
+with open("model_NS.pkl", "rb") as f:
+    model_NS = pickle.load(f)
+vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+if path.exists('vectorizer.pkl'):
+    print("available")
+else:
+    print("file not found")
+# vectorizer = cp.load(urlopen('https://storage.googleapis.com/database_import_nusademy/vectorizer.pkl', 'rb'))
+
+translator = google_translator()  
+
+def listToString(s): 
+    str1 = ""     
+    for ele in s: 
+        str1 += ele  
+    return str1 
+
+#flask app
 app = flask.Flask(__name__)
 
 @app.route('/')
-def index():
-    return '<h3 style="text-align: center;">Welcome to Nusademy Webhook API!<h3>'
+def home():
+    return 'Welcome to Nusademy Webhook API!'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -21,32 +53,49 @@ def webhook():
         'fulfillmentText': 'Custom Webhook Response'
     }
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict',methods=['POST'])
 def predict():
-    if model:
-            json_ = request.json
-            print(json_)
-            query = pd.get_dummies(pd.DataFrame(json_))
-            query = query.reindex(columns=model_columns, fill_value=0)
+    userInput = request.get_json(force=True)
+    userInput = userInput['queryResult']
+    userInput=userInput['queryText']
+    userInput = translator.translate(userInput,lang_tgt='en')  
+    if len(userInput) ==0:
+        return 'Silahkan Isi Teks Dulu'
 
-            prediction = list(model.predict(query))
-            print(prediction)
-            nanda='nanda'
-            return nanda
-    else:
-        print ('Train the model first')
-        return ('No model here to use')
+    replacements = [
+        (r"(http.*?\s)", " "),
+        (r"[^\w\s]", " "),
+        (r"\_", " "),
+        (r"\d+", " "),
+        (r"\{}","")]
+    
+    for old_data, new in replacements:
+        userInput = re.sub(old_data,new, userInput)
+    
+    userInput = [userInput]
+    print(userInput)
+    userInput_Vectorized = vectorizer.transform(userInput)
+
+    predict_EI = model_EI.predict(userInput_Vectorized)
+    predict_NS = model_NS.predict(userInput_Vectorized)
+    predict_FT = model_FT.predict(userInput_Vectorized)
+    predict_JP = model_JP.predict(userInput_Vectorized)
+
+
+    output_EI = 'E' if predict_EI == 0 else "I"
+    output_NS = 'N' if predict_NS == 0 else "S"
+    output_FT = 'F' if predict_FT == 0 else "T"
+    output_JP = 'J' if predict_JP == 0 else "P"
+
+    result = [output_EI,output_NS,output_FT,output_JP]
+    result = listToString(result)
+    print(result)
+    
+    return {
+        'fulfillmentText': 'Tipe Kepribadianmu adalah ' + result
+    }
 
 if __name__ == "__main__":
     app.secret_key = 'SecretKey'
-
-    with open("new_model.pkl", "rb") as f:
-        model = pickle.load(f)
-        print("model loaded into webhook")
-
-    with open("model_columns.pkl", "rb") as f:
-        model_columns = pickle.load(f)
-        print("model column loaded!")
-
     app.debug = True
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=8000)
