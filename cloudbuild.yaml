@@ -1,7 +1,16 @@
 steps:
+# Pull cache
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull gcr.io/nusademy-b21-cap0289/webhook-ml || exit 0']
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/nusademy-b21-cap0289/webhook-ml', '.']
+  args: [
+            'build',
+            '-t', 'gcr.io/nusademy-b21-cap0289/webhook-ml',
+            '--cache-from', 'gcr.io/nusademy-b21-cap0289/webhook-ml',
+            '.'
+        ]
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/nusademy-b21-cap0289/webhook-ml']
