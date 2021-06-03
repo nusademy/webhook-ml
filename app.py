@@ -11,8 +11,8 @@ from urllib.request import urlopen
 import cloudpickle as cp
 import os.path
 from os import path
-
-
+from recommendation import *
+import recommendation as job_recommend
 
 #import model
 with open("model_EI.pkl", "rb") as f:
@@ -28,7 +28,6 @@ if path.exists('vectorizer.pkl'):
     print("available")
 else:
     print("file not found")
-# vectorizer = cp.load(urlopen('https://storage.googleapis.com/database_import_nusademy/vectorizer.pkl', 'rb'))
 
 translator = google_translator()  
 
@@ -50,7 +49,8 @@ def webhook():
     req = request.get_json(force=True)
     print(req)
     return {
-        'fulfillmentText': 'Custom Webhook Response'
+        'fulfillmentText': 'Custom Webhook Response',
+                'fulfillmentText': 'Custom Webhook Response',
     }
 
 @app.route('/predict',methods=['POST'])
@@ -89,13 +89,13 @@ def predict():
 
     result = [output_EI,output_NS,output_FT,output_JP]
     result = listToString(result)
+    result = job_recommend.check_personality(result)
     print(result)
-    
     return {
-        'fulfillmentText': 'Tipe Kepribadianmu adalah ' + result
+        'fulfillmentText': result
     }
 
 if __name__ == "__main__":
     app.secret_key = 'SecretKey'
     app.debug = True
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=8000)
