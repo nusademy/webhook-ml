@@ -5,14 +5,14 @@
 ## Description
 This repository contains the source code of the Machine Learning webhook application from nusademy. This application is used to provide the ML API for Dialogflow and then proceeds to the Nusademy mobile application. This application uses Python Flask and is added with Machine Learning support such as, Tensorflow, Keras, and others (for more details see the requireeement.txt file). More about Flask can be seen at the following link. <https://flask.palletsprojects.com>
 
-##Features
+## Features
 - Testing API (/)
 - Testing Webhook (/webhook)
 - Predict MBTI (/predict)
 - Personality Type Definition
 - Personality Type Career Recommendations
 
-##Notebook
+## Notebook
 We also provide the IPython Notebook file [mbti-personality-classifier.ipynb](https://github.com/nusademy/webhook-ml/raw/main/mbti-personality-classifier.ipynb) which can be run on the Jupyter Notebook application.
 
 
