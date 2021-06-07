@@ -19,7 +19,7 @@ We also provide the IPython Notebook file [mbti-personality-classifier.ipynb](ht
 # Installation
 The following are the installation steps both locally and in production.
 ## System Requireements
-Based on the official documentation from Strapi and our implementation, here are the minimum system requirements to run the Backend API from Nusademy
+Based on our implementation, here are the minimum system requirements to run the Webhook ML from Nusademy
 - Python3.7+
 - Minimum required storage space recommended by your OS or 5 GB of free space
 
