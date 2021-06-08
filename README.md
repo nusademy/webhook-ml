@@ -5,6 +5,9 @@
 ## Description
 This repository contains the source code of the Machine Learning webhook application from nusademy. This application is used to provide the ML API for Dialogflow and then proceeds to the Nusademy mobile application. This application uses Python Flask and is added with Machine Learning support such as, Tensorflow, Keras, and others (for more details see the requireeement.txt file). More about Flask can be seen at the following link. <https://flask.palletsprojects.com>
 
+##What We are Built
+Building passion identifier model using Myers-Briggs Type Indicator datasets from Kaggle also using decision trees to explain each of personality and jobs that are suitable that predict by model. We build the model using Linear Regression to classify the personality type that users have based on user input. To integrate with Android we are building an API to serve the model that saves in pickle format using Flask micro web framework written in Python. We also integrate the API into Dialog Flow to make the user interface of the chatbot. We are not using Dialog Flow for Machine Learning purposes, we are just using Dialog Flow for UI to hack the development of chatbot in Android.
+
 ## Features
 - Testing API (/)
 - Testing Webhook (/webhook)
