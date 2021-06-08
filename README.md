@@ -13,7 +13,8 @@ This repository contains the source code of the Machine Learning webhook applica
 - Personality Type Career Recommendations
 
 ## Notebook
-We also provide the IPython Notebook file [passion-identifier-and-recommendation.ipynb](https://colab.research.google.com/drive/1VQiiGNxneu42VCTr8kh7v93o9FT1nmpM#scrollTo=cp1HyyiHbV_T) which can be run on Google Colab or another relate application. The datail step by step on creating ML Model also already provided in the notebook.
+We also provide the IPython Notebook file [passion-identifier-and-recommendation.ipynb](https://colab.research.google.com/drive/1VQiiGNxneu42VCTr8kh7v93o9FT1nmpM#scrollTo=cp1HyyiHbV_T) which can be run on Google Colab or another relate application. The datail step by step on creating ML Model also already provided in the notebook. Below is the architecture of our ML Model that deployed using Flask Application.
+![](https://github.com/nusademy/Bangkit2021CapstoneProject/blob/main/logo/ML%20Architecture.png)
 
 
 # Installation
