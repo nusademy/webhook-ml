@@ -13,7 +13,7 @@ This repository contains the source code of the Machine Learning webhook applica
 - Personality Type Career Recommendations
 
 ## Notebook
-We also provide the IPython Notebook file [mbti-personality-classifier.ipynb](https://github.com/nusademy/webhook-ml/raw/main/mbti-personality-classifier.ipynb) which can be run on the Jupyter Notebook application.
+We also provide the IPython Notebook file [passion-identifier-and-recommendation.ipynb](https://colab.research.google.com/drive/1VQiiGNxneu42VCTr8kh7v93o9FT1nmpM#scrollTo=cp1HyyiHbV_T) which can be run on Google Colab or another relate application.
 
 
 # Installation
